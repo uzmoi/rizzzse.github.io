@@ -1,4 +1,4 @@
-import { Center, HStack, StackDivider, Text } from "@chakra-ui/react";
+import { Center, Stack, StackDivider, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import { Layout } from "../components/layout";
 
@@ -9,10 +9,16 @@ export default function NotFoundPage() {
         <title>Page not found</title>
       </Head>
       <Center>
-        <HStack divider={<StackDivider />} spacing={8} my={16}>
+        <Stack
+          align="center"
+          direction={["column", "row"]}
+          divider={<StackDivider />}
+          spacing={8}
+          my={16}
+        >
           <Text fontSize="7xl">404</Text>
           <Text fontSize="xl">ページが見つかりません</Text>
-        </HStack>
+        </Stack>
       </Center>
     </Layout>
   );
