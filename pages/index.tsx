@@ -25,9 +25,9 @@ export default function IndexPage({ icon }: Props) {
       <Head>
         <title>rizzzse</title>
       </Head>
-      <Center my={16}>
+      <Center my="16">
         <Avatar size="2xl" name="rizzzse" src={icon} showBorder />
-        <Text fontSize="4xl" m={8}>rizzzse</Text>
+        <Text fontSize="4xl" m="8">rizzzse</Text>
       </Center>
     </Layout>
   );

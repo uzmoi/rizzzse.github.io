@@ -6,7 +6,7 @@ export const Header: React.FC<{  }> = ({  }) => {
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
-    <Flex as="header" p={2} h={14}>
+    <Flex as="header" p="2" h="14">
       <Box>
         <Text fontSize="2xl">
           <Link href="/">rizzzse apps</Link>

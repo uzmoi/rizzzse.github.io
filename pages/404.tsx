@@ -13,8 +13,8 @@ export default function NotFoundPage() {
           align="center"
           direction={["column", "row"]}
           divider={<StackDivider />}
-          spacing={8}
-          my={16}
+          spacing="8"
+          my="16"
         >
           <Text fontSize="7xl">404</Text>
           <Text fontSize="xl">ページが見つかりません</Text>

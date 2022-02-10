@@ -137,9 +137,9 @@ export default function AnglePage() {
         justify="center"
         direction={["column", "row"]}
         spacing={[8, 16]}
-        my={16}
+        my="16"
       >
-        <AspectRatio ratio={1} flex={1} minW={48} minH={48} maxW={80} maxH={80}>
+        <AspectRatio ratio={1} flex="1" minW="48" minH="48" maxW="80" maxH="80">
           <Angle
             angle={state.angle}
             onChange={handleAngle}
@@ -154,7 +154,7 @@ export default function AnglePage() {
             pr="5em"
             isInvalid={state.isInvalid}
           />
-          <InputRightElement w="5em" pl={2}>
+          <InputRightElement w="5em" pl="2">
             <Select variant="unstyled" value={state.unit} onChange={handleChangeUnit}>
               {angleUnits.map(unit => <option key={unit}>{unit}</option>)}
             </Select>

@@ -5,7 +5,7 @@ export const Layout: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   return (
-    <Flex flexFlow="column" p={8} minH="100vh">
+    <Flex flexFlow="column" p="8" minH="100vh">
       <Header />
       <Divider />
       <Container as="main" maxW="container.xl">
