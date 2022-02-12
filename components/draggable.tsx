@@ -1,12 +1,14 @@
 import { Box, BoxProps } from "@chakra-ui/react";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 const debounceTime = 16;
 
 export const Draggable: React.FC<{
   onDrag: (e: MouseEvent, el: HTMLDivElement) => void;
-  children: React.ReactNode;
-} & Omit<BoxProps, "onDrag">> = ({ onDrag, children, ...rest }) => {
+  children?: React.ReactNode;
+} & Omit<BoxProps, "onDragStart" | "onDrag" | "onDragEnd">> = (
+  { onDrag, children, ...rest }
+) => {
   const containerEl = useRef<HTMLDivElement>(null);
   const debounce = useRef(NaN);
 
@@ -61,22 +63,10 @@ export const Draggable: React.FC<{
   )
 };
 
-export const Rotatable: React.FC<{
-  onChangeAngle: (angle: number) => void;
-  children: React.ReactNode;
-} & BoxProps> = ({ onChangeAngle, children, ...rest }) => {
-  const c = useCallback((e: MouseEvent, el: HTMLDivElement) => {
-    const clientRect = el.getBoundingClientRect();
-    const angle = Math.atan2(
-      e.clientY - clientRect.top - (clientRect.height / 2),
-      e.clientX - clientRect.left - (clientRect.width / 2),
-    );
-    onChangeAngle(angle);
-  }, [onChangeAngle]);
-
-  return (
-    <Draggable {...rest} onDrag={c}>
-      {children}
-    </Draggable>
-  )
+export const calcAngle = (e: MouseEvent, el: HTMLDivElement) => {
+  const clientRect = el.getBoundingClientRect();
+  return Math.atan2(
+    e.clientY - clientRect.top - (clientRect.height / 2),
+    e.clientX - clientRect.left - (clientRect.width / 2),
+  );
 };

@@ -9,14 +9,15 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import { useReducer, useRef } from "react";
+import { useCallback, useReducer } from "react";
 import { Layout } from "../../components/layout";
+import { calcAngle, Draggable } from "../../components/draggable";
 
 const TAU = Math.PI * 2;
 
 const ANGLE_UNIT_RATES = {
   rad: 1,
-  deg: Math.PI / 180,
+  deg: TAU / 360,
   turn: TAU,
 } as const;
 const angleUnits = Object.keys(ANGLE_UNIT_RATES);
@@ -24,45 +25,23 @@ type AngleUnit = keyof typeof ANGLE_UNIT_RATES;
 
 // max = TAU / UNIT_RATES[unit];
 
-const DEBOUNCE_TIME = 32;
-
 const Angle: React.VFC<{
   angle: number;
   onChange(angle: number): void;
   mainColor: string;
   subColor: string;
 }> = ({ angle, onChange, mainColor, subColor }) => {
-  const debounce = useRef(NaN);
-  const handleAngle: React.MouseEventHandler<HTMLDivElement> = e => {
-    const x = e.nativeEvent.offsetX - (e.currentTarget.offsetWidth / 2);
-    const y = e.nativeEvent.offsetY - (e.currentTarget.offsetHeight / 2);
-    let rad = Math.atan2(y, x) + Math.PI / 2;
-    if(rad < 0) {
-      rad += TAU;
-    }
-    onChange(rad);
-  };
+  const handleDrag = useCallback((e: MouseEvent, el: HTMLDivElement) => {
+    const angle = calcAngle(e, el);
+    onChange(angle + TAU / 4);
+  }, [onChange]);
   const gradient = `conic-gradient(${mainColor} 0 ${angle}rad,${subColor} ${angle}rad)`;
 
   return (
-    <Box
+    <Draggable
       style={{ background: gradient }}
       borderRadius="full"
-      cursor="pointer"
-      onMouseDown={e => {
-        debounce.current = Date.now();
-        handleAngle(e);
-      }}
-      onMouseMove={e => {
-        if(Date.now() - debounce.current > DEBOUNCE_TIME) {
-          debounce.current = Date.now();
-          handleAngle(e);
-        }
-      }}
-      onMouseUp={e => {
-        debounce.current = NaN;
-        handleAngle(e);
-      }}
+      onDrag={handleDrag}
     />
   );
 };
@@ -114,15 +93,15 @@ export default function AnglePage() {
     isInvalid: false,
     string: "1",
   });
-  const handleInput: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const handleInput: React.ChangeEventHandler<HTMLInputElement> = useCallback(e => {
     dispatch({ type: "STRING", payload: e.target.value });
-  };
-  const handleChangeUnit: React.ChangeEventHandler<HTMLSelectElement> = e => {
+  }, []);
+  const handleChangeUnit: React.ChangeEventHandler<HTMLSelectElement> = useCallback(e => {
     dispatch({ type: "UNIT", payload: e.target.value as AngleUnit });
-  };
-  const handleAngle = (rad: number) => {
+  }, []);
+  const handleAngle = useCallback((rad: number) => {
     dispatch({ type: "ANGLE", payload: rad });
-  };
+  }, []);
 
   const mainColor = "#df6c20";
   const subColor = useColorModeValue("#aaa", "#444");

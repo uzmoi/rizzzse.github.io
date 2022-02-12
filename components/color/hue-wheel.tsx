@@ -1,6 +1,6 @@
 import { Box, LayoutProps } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { Rotatable } from "../draggable";
+import { calcAngle, Draggable } from "../draggable";
 import { PosCenter } from "./pos-center";
 
 const colors = Array.from({ length: 36 }, (_, i) => `hsl(${i * 10},100%,50%)`);
@@ -18,13 +18,13 @@ export const HueWheel: React.FC<{
   onChange(hue: number): void;
   size?: LayoutProps["boxSize"];
 }> = ({ hue, onChange, size = "32", children }) => {
-  const setHueAngle = useCallback((hueAngle: number) => {
-    onChange(hueAngle / DEG_RATE);
+  const setDrag = useCallback((e: MouseEvent, el: HTMLDivElement) => {
+    onChange(calcAngle(e, el) / DEG_RATE);
   }, [onChange]);
 
   return (
-    <Rotatable
-      onChangeAngle={setHueAngle}
+    <Draggable
+      onDrag={setDrag}
       bg={hueWheel}
       boxSize={size}
       borderRadius="full"
@@ -55,6 +55,6 @@ export const HueWheel: React.FC<{
           bgColor: "var(--bg-color)",
         }}
       />
-    </Rotatable>
+    </Draggable>
   );
 };
