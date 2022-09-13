@@ -1,0 +1,39 @@
+---
+import gravatar from "gravatar";
+import Layout from "../layouts/Layout.astro";
+
+const iconUrl = gravatar.url("rizzzse@gmail.com", {
+	size: "200",
+	default: "404",
+}, true);
+---
+
+<Layout title="rizzzse">
+	<main>
+		<div class="container">
+			<img class="icon" src={iconUrl} />
+			<h1 class="name">rizzzse</h1>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+	}
+	.container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-block: 4em;
+	}
+	.icon {
+		width: 200px;
+		height: 200px;
+		border: 2px solid gray;
+		border-radius: 50%;
+	}
+	.name {
+		margin: 1em;
+	}
+</style>
