@@ -5,7 +5,7 @@ const debounceTime = 16;
 
 export const Draggable: preact.FunctionComponent<{
   onDrag: (e: MouseEvent, el: HTMLDivElement) => void;
-  children?: preact.VNode;
+  children?: preact.ComponentChildren;
 } & Omit<preact.ComponentProps<"div">, "onDragStart" | "onDrag" | "onDragEnd">> = (
   { onDrag, children, ...rest }
 ) => {
