@@ -1,7 +1,7 @@
-import { useCallback, useState } from "react";
-import { HueWheel } from "./hue-wheel";
-import { PosCenter } from "./pos-center";
-import { SVPalette } from "./sv-palette";
+import { css } from "@linaria/core";
+import { useCallback, useState } from "preact/hooks";
+import { HueWheel } from "./HueWheel";
+import { SVPalette } from "./SVPalette";
 
 export interface HSVColor {
   hue: number;
@@ -38,14 +38,28 @@ export const useHSVColor = () => {
   };
 };
 
-export const ColorPicker: React.FC = () => {
+export const useColorPicker = () => {
   const color = useHSVColor();
 
-  return (
+  const picker = (
     <HueWheel hue={color.hue} onChange={color.setHue}>
-      <PosCenter boxSize="66%">
-        <SVPalette color={color} onChange={color.set} />
-      </PosCenter>
+      <SVPalette color={color} onChange={color.set} className={SVPalettePosition} />
     </HueWheel>
   );
+  return [color, picker] as const;
 };
+
+export const ColorPicker: preact.FunctionComponent = () => {
+  const [_, picker] = useColorPicker();
+
+  return picker;
+};
+
+const SVPalettePosition = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 66%;
+  height: 66%;
+`;

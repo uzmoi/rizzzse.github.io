@@ -1,0 +1,18 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { ColorPicker } from "../../components/color/picker";
+---
+
+<Layout title="Color">
+  <main>
+    <ColorPicker client:only="preact" />
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

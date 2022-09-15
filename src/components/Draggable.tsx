@@ -1,23 +1,23 @@
-import { Box, BoxProps } from "@chakra-ui/react";
-import { useEffect, useMemo, useRef } from "react";
+import { css, cx } from "@linaria/core";
+import { useEffect, useMemo, useRef } from "preact/hooks";
 
 const debounceTime = 16;
 
-export const Draggable: React.FC<{
+export const Draggable: preact.FunctionComponent<{
   onDrag: (e: MouseEvent, el: HTMLDivElement) => void;
-  children?: React.ReactNode;
-} & Omit<BoxProps, "onDragStart" | "onDrag" | "onDragEnd">> = (
+  children?: preact.VNode;
+} & Omit<preact.ComponentProps<"div">, "onDragStart" | "onDrag" | "onDragEnd">> = (
   { onDrag, children, ...rest }
 ) => {
   const containerEl = useRef<HTMLDivElement>(null);
   const debounce = useRef(NaN);
 
   const handlers = useMemo(() => ({
-    onMouseDown(e: React.MouseEvent<HTMLDivElement>) {
+    onMouseDown(e: MouseEvent & { currentTarget: HTMLDivElement }) {
       e.stopPropagation();
       debounce.current = e.timeStamp;
       if(containerEl.current) {
-        onDrag(e.nativeEvent, containerEl.current);
+        onDrag(e, containerEl.current);
       }
     },
     onMouseMove(e: MouseEvent) {
@@ -52,16 +52,20 @@ export const Draggable: React.FC<{
   }, [handlers]);
 
   return (
-    <Box
+    <div
       ref={containerEl}
-      cursor="pointer"
+      className={cx(DraggableStyle, rest.className)}
       {...rest}
       onMouseDown={handlers.onMouseDown}
     >
       {children}
-    </Box>
+    </div>
   )
 };
+
+const DraggableStyle = css`
+  cursor: pointer;
+`;
 
 export const calcAngle = (e: MouseEvent, el: HTMLDivElement) => {
   const clientRect = el.getBoundingClientRect();
