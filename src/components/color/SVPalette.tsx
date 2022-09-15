@@ -1,4 +1,4 @@
-import * as chroma from "chroma-js";
+import chroma from "chroma-js";
 import { clamp } from "emnorst";
 import { css, cx } from "@linaria/core";
 import { useCallback } from "preact/hooks";
