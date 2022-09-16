@@ -3,37 +3,71 @@ import gravatar from "gravatar";
 import Layout from "../layouts/Layout.astro";
 
 const iconUrl = gravatar.url("rizzzse@gmail.com", {
-	size: "200",
-	default: "404",
+  size: "200",
+  default: "404",
 }, true);
+
+const plofileLinks = [
+  { name: "GitHub", href: "https://github.com/rizzzse" },
+  { name: "Twitter", href: "https://twitter.com/rizzzse" },
+  { name: "Zenn", href: "https://zenn.dev/rizzzse" },
+];
 ---
 
 <Layout title="rizzzse">
-	<main>
-		<div class="container">
-			<img class="icon" src={iconUrl} />
-			<h1 class="name">rizzzse</h1>
-		</div>
-	</main>
+  <main>
+    <div class="plofile">
+      <img class="icon" src={iconUrl} />
+      <div class="text-plofile">
+        <p class="name">rizzzse</p>
+        <ul class="links">
+          {plofileLinks.map(link => (
+            <li class="link">
+              <a href={link.href}>{link.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </main>
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-	}
-	.container {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-block: 4em;
-	}
-	.icon {
-		width: 200px;
-		height: 200px;
-		border: 2px solid gray;
-		border-radius: 50%;
-	}
-	.name {
-		margin: 1em;
-	}
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .plofile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block: 4em;
+  }
+  .icon {
+    width: 6em;
+    height: 6em;
+    border: 2px solid gray;
+    border-radius: 50%;
+  }
+  .text-plofile {
+    margin-left: 1em;
+    max-width: 16em;
+  }
+  .name {
+    padding-bottom: 0.1em;
+    border-bottom: 3px solid #e22;
+    line-height: 1;
+    font-size: 2.2em;
+    font-weight: bold;
+  }
+  .links {
+    display: flex;
+    flex-flow: row wrap;
+    list-style: none;
+  }
+  .link {
+    padding: 0.2em;
+    font-size: 0.8em;
+  }
 </style>
