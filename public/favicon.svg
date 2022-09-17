@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="256" height="256">
+  <defs>
+    <clipPath id="diagonal-rect">
+      <rect x="0" y="0" width="128" height="128" />
+      <rect x="128" y="128" width="128" height="128" />
+    </clipPath>
+  </defs>
+  <circle cx="128" cy="128" r="128" fill="#aaa" />
+  <circle cx="128" cy="128" r="128" fill="#ddd" clip-path="url(#diagonal-rect)" />
+  <circle cx="128" cy="128" r="64" fill="#ddd" />
+  <circle cx="128" cy="128" r="64" fill="#aaa" clip-path="url(#diagonal-rect)" />
+  <circle cx="128" cy="128" r="120" fill="none" stroke="#d44" stroke-width="16" />
+</svg>
