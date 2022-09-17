@@ -5,6 +5,7 @@ import linaria from "@linaria/rollup";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://rizzzse.github.io",
   integrations: [svelte(), preact()],
   vite: {
     plugins: [linaria()],
