@@ -1,0 +1,37 @@
+---
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<header>
+  <a href="/">
+    <img class="favicon" src="/favicon.svg" />
+  </a>
+  <p class="page-title">{title}</p>
+</header>
+
+<style>
+  header {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding-block: 0.8em;
+    padding-inline: 1.6em;
+    border-bottom: 1px solid #000;
+  }
+  .favicon {
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: 50%;
+    vertical-align: bottom;
+  }
+  .page-title {
+    flex-grow: 1;
+    padding-inline: 1em;
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+</style>
